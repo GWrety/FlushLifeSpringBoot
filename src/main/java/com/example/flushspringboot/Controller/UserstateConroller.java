@@ -14,7 +14,15 @@ public class UserstateConroller {
     @Autowired
     UserstateService userstateService;
 
-    //请求使用时间
+    //请求用户状态数据
+    @ResponseBody
+    @RequestMapping("/getUserstate")
+    Result getUserstate(User user){
+        Userstate userstate=userstateService.findUserstateById(user.getId());
+        Result result=new Result(200);
+        result.setData(userstate);
+        return result;
+    }
     @ResponseBody
     @RequestMapping("/getEnrollTime")
     Result getEnrollTime(User user){
@@ -62,7 +70,7 @@ public class UserstateConroller {
     @RequestMapping("/addFeelTimes")
     Result addFeelTimes(User user){
         Userstate userstate=userstateService.findUserstateById(user.getId());
-        userstate.setBreathetimes(userstate.getBreathetimes()+1);
+        userstate.setFeeltimes(userstate.getFeeltimes()+1);
         userstateService.enrolluserstate(userstate);
         return new Result(200);
     }
